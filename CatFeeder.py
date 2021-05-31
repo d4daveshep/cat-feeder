@@ -1,7 +1,23 @@
 #!/usr/bin/env python
 
+from GmailWrapper import GmailWrapper
+
 import RPi.GPIO as GPIO
 import time
+
+HOSTNAME = 'imap.gmail.com'
+USERNAME = 'cat-feeder@daveshep.net.nz'
+PASSWORD = 'vhov zueo fyas bkxd'
+
+def feedByGmail():
+    gmailWrapper = GmailWrapper(HOSTNAME, USERNAME, PASSWORD)
+    ids = gmailWrapper.getIdsBySubject('feed cats')
+    if(len(ids) > 0):
+        try:
+            feed()
+            gmailWrapper.markAsRead(ids)
+        except:
+            print("Failed to feed cats, they're starvingggg")
 
 def feed():
     # let the GPIO library know where we've connected our servo to the Pi
@@ -25,8 +41,13 @@ def feed():
         GPIO.cleanup()
 
 if __name__ == '__main__':
+    # feed by receiving email
+    feedByGmail()
+
     # kick off the feeding process (move the servo)
-    feed()
+    #feed()
+
+
 # This file is the top level programme control for the cat-feeder
 
 ### Initialise
