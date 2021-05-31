@@ -9,6 +9,8 @@ HOSTNAME = 'imap.gmail.com'
 USERNAME = 'cat-feeder@daveshep.net.nz'
 PASSWORD = 'vhov zueo fyas bkxd'
 
+GPIO_PIN = 11
+
 def feedByGmail():
     gmailWrapper = GmailWrapper(HOSTNAME, USERNAME, PASSWORD)
     ids = gmailWrapper.getIdsBySubject('feed cats')
@@ -22,10 +24,10 @@ def feedByGmail():
 def feed():
     # let the GPIO library know where we've connected our servo to the Pi
     GPIO.setmode(GPIO.BOARD)
-    GPIO.setup(11, GPIO.OUT)
+    GPIO.setup(GPIO_PIN, GPIO.OUT)
 
     try:
-        servo = GPIO.PWM(11, 50)
+        servo = GPIO.PWM(GPIO_PIN, 50)
         servo.start(0)
 
         # spin left, right, then left again rather than in a continuous circle
