@@ -33,11 +33,11 @@ def feed():
         servo.start(0)
 
         # spin to 0 deg
-        servo1.ChangeDutyCycle(duty0)
+        servo.ChangeDutyCycle(duty0)
         time.sleep(0.5)
 
         # spin to 180 deg
-        servo1.ChangeDutyCycle(duty180)
+        servo.ChangeDutyCycle(duty180)
         time.sleep(0.5)
 
         # spin left, right, then left again rather than in a continuous circle
