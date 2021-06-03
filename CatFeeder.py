@@ -25,18 +25,28 @@ def feed():
     # let the GPIO library know where we've connected our servo to the Pi
     GPIO.setmode(GPIO.BOARD)
     GPIO.setup(GPIO_PIN, GPIO.OUT)
+    duty0 = 4.2
+    duty180 = 11.25
 
     try:
         servo = GPIO.PWM(GPIO_PIN, 50)
         servo.start(0)
 
+        # spin to 0 deg
+        servo1.ChangeDutyCycle(duty0)
+        time.sleep(0.5)
+
+        # spin to 180 deg
+        servo1.ChangeDutyCycle(duty180)
+        time.sleep(0.5)
+
         # spin left, right, then left again rather than in a continuous circle
         # to prevent the food from jamming the servo
-        for index in range(0, 3):
-            dutyCycle = 4.2 if (index % 2 == 0) else 11.25
-            servo.ChangeDutyCycle(dutyCycle)
-            # adjust the sleep time to have the servo spin longer or shorter in that direction
-            time.sleep(0.8)
+#        for index in range(0, 3):
+#            dutyCycle = 4.2 if (index % 2 == 0) else 11.25
+#            servo.ChangeDutyCycle(dutyCycle)
+#            # adjust the sleep time to have the servo spin longer or shorter in that direction
+#            time.sleep(0.8)
     finally:
         # always cleanup after ourselves
         servo.stop()
@@ -44,10 +54,10 @@ def feed():
 
 if __name__ == '__main__':
     # feed by receiving email
-    feedByGmail()
+#    feedByGmail()
 
     # kick off the feeding process (move the servo)
-    #feed()
+    feed()
 
 
 # This file is the top level programme control for the cat-feeder
