@@ -19,8 +19,12 @@ def feedByGmail():
             feed()
             gmailWrapper.markAsRead(ids)
             print("Cats feed successfully")
-        except:
-            print("FAILED to feed cats")
+        except Exception as e:
+            print("FAILED to feed cats", e)
+    else:
+        print("Nothing to do")
+
+
 
 def feed():
     # let the GPIO library know where we've connected our servo to the Pi
