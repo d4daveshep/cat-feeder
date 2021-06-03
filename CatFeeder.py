@@ -54,10 +54,10 @@ def feed():
 
 if __name__ == '__main__':
     # feed by receiving email
-#    feedByGmail()
+    feedByGmail()
 
     # kick off the feeding process (move the servo)
-    feed()
+#    feed()
 
 
 # This file is the top level programme control for the cat-feeder
