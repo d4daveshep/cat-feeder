@@ -2,8 +2,8 @@
 import RPi.GPIO as GPIO
 import time
 
-def dutycycle(pulse):
-    return(pulse/20.0*100.0)
+def dutycycle(angle):
+    return(angle/20.0+3.0)
 
 # Set GPIO numbering mode
 GPIO.setmode(GPIO.BOARD)
@@ -21,17 +21,17 @@ time.sleep(2)
 #print("Rotating 180 degrees in 10 steps")
 
 # Test mid point
-servo1.ChangeDutyCycle(dutycycle(1.5))
+servo1.ChangeDutyCycle(dutycycle(90.0))
 time.sleep(0.5)
 
 # Test end points
-servo1.ChangeDutyCycle(dutycycle(0.6))
+servo1.ChangeDutyCycle(dutycycle(0.0))
 time.sleep(1.0)
-servo1.ChangeDutyCycle(dutycycle(2.4))
+servo1.ChangeDutyCycle(dutycycle(180.0))
 time.sleep(1.0)
 
 # Test mid point
-servo1.ChangeDutyCycle(dutycycle(1.5))
+servo1.ChangeDutyCycle(dutycycle(90.0))
 time.sleep(0.5)
 
 
