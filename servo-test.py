@@ -2,6 +2,9 @@
 import RPi.GPIO as GPIO
 import time
 
+def dutycycle(pulse):
+    return(pulse/20.0)
+
 # Set GPIO numbering mode
 GPIO.setmode(GPIO.BOARD)
 
@@ -17,18 +20,10 @@ time.sleep(2)
 # Let's move the servo
 #print("Rotating 180 degrees in 10 steps")
 
-# Define duty variable
-duty = 4.2
-servo1.ChangeDutyCycle(duty)
+# Test mid point
+servo1.ChangeDutyCycle(dutycycle(1.5))
 time.sleep(0.5)
 
-#duty = 7.5
-#servo1.ChangeDutyCycle(duty)
-#time.sleep(1)
-
-duty = 11.25
-servo1.ChangeDutyCycle(duty)
-time.sleep(1)
 
 # Loop for duty values from 2 to 12 (0 to 180 degrees)
 #while duty <=11.5:
