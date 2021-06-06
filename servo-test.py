@@ -24,6 +24,16 @@ time.sleep(2)
 servo1.ChangeDutyCycle(dutycycle(1.5))
 time.sleep(0.5)
 
+# Test end points
+servo1.ChangeDutyCycle(dutycycle(0.64))
+time.sleep(1.0)
+servo1.ChangeDutyCycle(dutycycle(1.99))
+time.sleep(1.0)
+
+# Test mid point
+servo1.ChangeDutyCycle(dutycycle(1.5))
+time.sleep(0.5)
+
 
 # Loop for duty values from 2 to 12 (0 to 180 degrees)
 #while duty <=11.5:
