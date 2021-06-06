@@ -3,7 +3,7 @@ import RPi.GPIO as GPIO
 import time
 
 def dutycycle(pulse):
-    return(pulse/20.0)
+    return(pulse/20.0*100.0)
 
 # Set GPIO numbering mode
 GPIO.setmode(GPIO.BOARD)
