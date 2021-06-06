@@ -25,9 +25,9 @@ servo1.ChangeDutyCycle(dutycycle(1.5))
 time.sleep(0.5)
 
 # Test end points
-servo1.ChangeDutyCycle(dutycycle(0.5))
+servo1.ChangeDutyCycle(dutycycle(0.6))
 time.sleep(1.0)
-servo1.ChangeDutyCycle(dutycycle(2.2))
+servo1.ChangeDutyCycle(dutycycle(2.4))
 time.sleep(1.0)
 
 # Test mid point
