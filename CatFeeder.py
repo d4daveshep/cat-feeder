@@ -9,6 +9,7 @@ import logging
 HOSTNAME = 'imap.gmail.com'
 USERNAME = 'cat-feeder@daveshep.net.nz'
 PASSWORD = 'vhov zueo fyas bkxd'
+SUBJECT_FEED = 'feed cats'  # case insensitive
 
 GPIO_PIN = 11
 
@@ -21,9 +22,9 @@ def dutycycle(angle):
 def feedByGmail():
     logging.info("checking email at " + USERNAME)
     gmailWrapper = GmailWrapper(HOSTNAME, USERNAME, PASSWORD)
-    ids = gmailWrapper.getIdsBySubject('feed cats')
+    ids = gmailWrapper.getIdsBySubject(SUBJECT_FEED)
     if (len(ids) > 0):
-        logging.info("got %d email", len(ids))
+        logging.info("got %d email to " + SUBJECT_FEED, len(ids))
         try:
             feed()
             gmailWrapper.markAsRead(ids)
