@@ -11,6 +11,10 @@ PASSWORD = 'vhov zueo fyas bkxd'
 
 GPIO_PIN = 11
 
+# dutycycle calculation for Jaycar YM2763 servo
+def dutycycle(angle):
+    return((angle+90)/20.0+3.0) # -90.0 < angle < +90.0
+
 def feedByGmail():
     gmailWrapper = GmailWrapper(HOSTNAME, USERNAME, PASSWORD)
     ids = gmailWrapper.getIdsBySubject('feed cats')
@@ -30,28 +34,28 @@ def feed():
     # let the GPIO library know where we've connected our servo to the Pi
     GPIO.setmode(GPIO.BOARD)
     GPIO.setup(GPIO_PIN, GPIO.OUT)
-    duty0 = 4.2
-    duty180 = 11.25
 
     try:
         servo = GPIO.PWM(GPIO_PIN, 50)
         servo.start(0)
 
-        # spin to 0 deg
-        servo.ChangeDutyCycle(duty0)
+        # start in neutral position
+        servo.ChangeDutyCycle(dutycycle(0.0))
         time.sleep(0.5)
 
-        # spin to 180 deg
-        servo.ChangeDutyCycle(duty180)
+        # spin to -60 deg
+        servo.ChangeDutyCycle(dutycycle(-60.0))
         time.sleep(0.5)
 
-        # spin left, right, then left again rather than in a continuous circle
-        # to prevent the food from jamming the servo
-#        for index in range(0, 3):
-#            dutyCycle = 4.2 if (index % 2 == 0) else 11.25
-#            servo.ChangeDutyCycle(dutyCycle)
-#            # adjust the sleep time to have the servo spin longer or shorter in that direction
-#            time.sleep(0.8)
+        # spin to +60 deg
+        servo.ChangeDutyCycle(dutycycle(+60.0))
+        time.sleep(0.5)
+
+        # end in neutral position
+        servo.ChangeDutyCycle(dutycycle(0.0))
+        time.sleep(0.5)
+
+
     finally:
         # always cleanup after ourselves
         servo.stop()
@@ -67,29 +71,7 @@ if __name__ == '__main__':
 
 # This file is the top level programme control for the cat-feeder
 
-### Initialise
 
-# Servo parameters
-Period = 1/50
-
-
-# Wait for email instructions
-
-# Parse email instructions
-
-# Do instructions
-
-# Handle any errors
-
-# Email response
-
-# Tidy up
-
-### Utility functions ###
-
-# Calculate servo duty cycle from desired angle
-def calculateDutyCycle( angle ) :
-    return
 
 
 

@@ -2,6 +2,7 @@
 import RPi.GPIO as GPIO
 import time
 
+# dutycycle calculation for Jaycar YM2763 servo
 def dutycycle(angle):
     return((angle+90)/20.0+3.0) # -90.0 < angle < +90.0
 
