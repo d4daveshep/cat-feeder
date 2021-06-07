@@ -12,16 +12,18 @@ PASSWORD = 'vhov zueo fyas bkxd'
 
 GPIO_PIN = 11
 
+
 # dutycycle calculation for Jaycar YM2763 servo
 def dutycycle(angle):
-    return((angle+90)/20.0+3.0) # -90.0 < angle < +90.0
+    return ((angle + 90) / 20.0 + 3.0)  # -90.0 < angle < +90.0
+
 
 def feedByGmail():
     logging.info("checking email")
     gmailWrapper = GmailWrapper(HOSTNAME, USERNAME, PASSWORD)
     ids = gmailWrapper.getIdsBySubject('feed cats')
     logging.info("got %d email", ids)
-    if(len(ids) > 0):
+    if (len(ids) > 0):
         try:
             feed()
             gmailWrapper.markAsRead(ids)
@@ -30,7 +32,6 @@ def feedByGmail():
             print("FAILED to feed cats", e)
     else:
         print("Nothing to do")
-
 
 
 def feed():
@@ -64,9 +65,10 @@ def feed():
         servo.stop()
         GPIO.cleanup()
 
+
 if __name__ == '__main__':
     # configure logging
-    logging.basicConfig("feeder.log",level=logging.INFO)
+    logging.basicConfig(filename="feeder.log", level=logging.INFO)
 
     # feed by receiving email
     feedByGmail()
@@ -76,9 +78,3 @@ if __name__ == '__main__':
 
 
 # This file is the top level programme control for the cat-feeder
-
-
-
-
-
-
