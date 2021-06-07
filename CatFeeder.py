@@ -4,6 +4,7 @@ from GmailWrapper import GmailWrapper
 
 import RPi.GPIO as GPIO
 import time
+import logging
 
 HOSTNAME = 'imap.gmail.com'
 USERNAME = 'cat-feeder@daveshep.net.nz'
@@ -16,8 +17,10 @@ def dutycycle(angle):
     return((angle+90)/20.0+3.0) # -90.0 < angle < +90.0
 
 def feedByGmail():
+    logging.info("checking email")
     gmailWrapper = GmailWrapper(HOSTNAME, USERNAME, PASSWORD)
     ids = gmailWrapper.getIdsBySubject('feed cats')
+    logging.info("got %d email", ids)
     if(len(ids) > 0):
         try:
             feed()
@@ -62,6 +65,9 @@ def feed():
         GPIO.cleanup()
 
 if __name__ == '__main__':
+    # configure logging
+    logging.basicConfig(feeder.log,level=logging.INFO)
+
     # feed by receiving email
     feedByGmail()
 
