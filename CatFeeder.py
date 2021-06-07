@@ -9,7 +9,7 @@ import logging
 HOSTNAME = 'imap.gmail.com'
 USERNAME = 'cat-feeder@daveshep.net.nz'
 PASSWORD = 'vhov zueo fyas bkxd'
-SUBJECT_FEED = 'feed cats'  # case insensitive
+SUBJECT_FEED = 'FEED CATS'  # case insensitive
 
 GPIO_PIN = 11
 
@@ -22,20 +22,17 @@ def dutycycle(angle):
 def feedByGmail():
     logging.info("checking email at " + USERNAME)
     gmailWrapper = GmailWrapper(HOSTNAME, USERNAME, PASSWORD)
-    ids = gmailWrapper.getIdsBySubject(SUBJECT_FEED)
-    if (len(ids) > 0):
-        logging.info("got %d email to " + SUBJECT_FEED, len(ids))
+    feedEmails = gmailWrapper.getIdsBySubject(SUBJECT_FEED)
+    if (len(feedEmails) > 0):
+        logging.info("got %d email to " + SUBJECT_FEED, len(feedEmails))
         try:
             feed()
-            gmailWrapper.markAsRead(ids)
-            logging.info("cats fed successfully")
-            # print("Cats feed successfully")
+            gmailWrapper.markAsRead(feedEmails)
+            logging.info("completed successfully")
         except Exception as e:
-            logging.error("FAILED to feed cats.  %s", e)
-            # print("FAILED to feed cats", e)
+            logging.error("FAILED to" + SUBJECT_FEED, "%s", e)
     else:
         logging.info("nothing to do")
-        # print("Nothing to do")
 
 
 def feed():
