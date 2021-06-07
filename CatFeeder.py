@@ -71,7 +71,9 @@ def feed():
 
 if __name__ == '__main__':
     # configure logging
-    logging.basicConfig(filename="feeder.log", level=logging.DEBUG)
+    logging.basicConfig(filename="feeder.log",
+                        level=logging.DEBUG,
+                        format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %H:%M:%S')
 
     # feed by receiving email
     feedByGmail()
