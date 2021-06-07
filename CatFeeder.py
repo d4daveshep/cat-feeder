@@ -19,7 +19,7 @@ def dutycycle(angle):
 
 
 def feedByGmail():
-    logging.debug("checking email")
+    logging.info("checking email")
     gmailWrapper = GmailWrapper(HOSTNAME, USERNAME, PASSWORD)
     ids = gmailWrapper.getIdsBySubject('feed cats')
     if (len(ids) > 0):
@@ -33,7 +33,7 @@ def feedByGmail():
             logging.error("FAILED to feed cats.  %s", e)
             #print("FAILED to feed cats", e)
     else:
-        logging.debug("nothing to do")
+        logging.info("nothing to do")
         #print("Nothing to do")
 
 
@@ -72,7 +72,7 @@ def feed():
 if __name__ == '__main__':
     # configure logging
     logging.basicConfig(filename="feeder.log",
-                        level=logging.DEBUG,
+                        level=logging.INFO,
                         format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %H:%M:%S')
 
     # feed by receiving email
