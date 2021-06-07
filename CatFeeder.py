@@ -22,7 +22,7 @@ def feedByGmail():
     logging.info("checking email")
     gmailWrapper = GmailWrapper(HOSTNAME, USERNAME, PASSWORD)
     ids = gmailWrapper.getIdsBySubject('feed cats')
-    logging.info("got %d email", ids)
+    logging.info("got %s email", ids)
     if (len(ids) > 0):
         try:
             feed()
