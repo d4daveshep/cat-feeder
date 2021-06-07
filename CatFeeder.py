@@ -66,7 +66,7 @@ def feed():
 
 if __name__ == '__main__':
     # configure logging
-    logging.basicConfig(feeder.log,level=logging.INFO)
+    logging.basicConfig("feeder.log",level=logging.INFO)
 
     # feed by receiving email
     feedByGmail()
