@@ -73,7 +73,7 @@ if __name__ == '__main__':
     # configure logging
     logging.basicConfig(filename="feeder.log",
                         level=logging.INFO,
-                        format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %H:%M:%S')
+                        format='%(asctime)s %(message)s', datefmt='%d-%m-%Y %H:%M:%S')
 
     # feed by receiving email
     feedByGmail()
