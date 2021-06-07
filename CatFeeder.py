@@ -19,7 +19,7 @@ def dutycycle(angle):
 
 
 def feedByGmail():
-    logging.info("checking email")
+    logging.info("checking email at" + USERNAME)
     gmailWrapper = GmailWrapper(HOSTNAME, USERNAME, PASSWORD)
     ids = gmailWrapper.getIdsBySubject('feed cats')
     if (len(ids) > 0):
@@ -28,13 +28,13 @@ def feedByGmail():
             feed()
             gmailWrapper.markAsRead(ids)
             logging.info("cats fed successfully")
-            #print("Cats feed successfully")
+            # print("Cats feed successfully")
         except Exception as e:
             logging.error("FAILED to feed cats.  %s", e)
-            #print("FAILED to feed cats", e)
+            # print("FAILED to feed cats", e)
     else:
         logging.info("nothing to do")
-        #print("Nothing to do")
+        # print("Nothing to do")
 
 
 def feed():

@@ -16,7 +16,7 @@ class GmailWrapper:
         self.login()
 
     def login(self):
-        logging.info('Logging in as ' + self.userName)
+        logging.debug('Logging in as ' + self.userName)
         server = IMAPClient(self.host, use_uid=True, ssl=True)
         server.login(self.userName, self.password)
         self.server = server
