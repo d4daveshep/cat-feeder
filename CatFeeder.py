@@ -19,7 +19,7 @@ def dutycycle(angle):
 
 
 def feedByGmail():
-    logging.info("checking email at" + USERNAME)
+    logging.info("checking email at " + USERNAME)
     gmailWrapper = GmailWrapper(HOSTNAME, USERNAME, PASSWORD)
     ids = gmailWrapper.getIdsBySubject('feed cats')
     if (len(ids) > 0):
