@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 
 from imapclient import IMAPClient, SEEN
+import logging
 
 SEEN_FLAG = 'SEEN'
 UNSEEN_FLAG = 'UNSEEN'
+
 
 class GmailWrapper:
     def __init__(self, host, userName, password):
@@ -14,7 +16,7 @@ class GmailWrapper:
         self.login()
 
     def login(self):
-        print('Logging in as ' + self.userName)
+        logging.info('Logging in as ' + self.userName)
         server = IMAPClient(self.host, use_uid=True, ssl=True)
         server.login(self.userName, self.password)
         self.server = server
@@ -28,7 +30,7 @@ class GmailWrapper:
         #   build the search criteria (e.g. unread emails with the given subject)
         self.searchCriteria = [UNSEEN_FLAG, 'SUBJECT', subject]
 
-        if(unreadOnly == False):
+        if (unreadOnly == False):
             #   force the search to include "read" emails too
             self.searchCriteria.append(SEEN_FLAG)
 
