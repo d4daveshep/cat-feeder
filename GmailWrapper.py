@@ -50,11 +50,8 @@ class GmailWrapper:
         message_data = self.server.fetch([messageID], 'RFC822').get(messageID)
         email_message = email.message_from_bytes(message_data[b'RFC822'])
         email_return_path = email_message.get('Return-Path')
-        address = email_return_path[1:len(email_return_path)-2]
-
-        logging.info(['email from... ', address])
-
-        return
+        address = email_return_path[1:len(email_return_path)-1]
+        return address
 
         #message = email.message_from_bytes(message_data)
         #return message_data

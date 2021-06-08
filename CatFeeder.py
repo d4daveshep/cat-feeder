@@ -37,9 +37,9 @@ def sendPhoto():
             os.system('fswebcam --jpeg 95 --save ' + photoFilename)
 
             # get reply address
-            reply = gmailWrapper.getReplyTo(photoEmails[0])
-            logging.info('reply is...')
-            logging.info(reply)
+            reply_address = gmailWrapper.getReplyTo(photoEmails[0])
+            logging.info('reply address is... ')
+            logging.info(reply_address)
 
             # send as email attachment
 
