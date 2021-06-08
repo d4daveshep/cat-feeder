@@ -2,6 +2,7 @@
 
 from imapclient import IMAPClient, SEEN
 import logging
+import email
 
 SEEN_FLAG = 'SEEN'
 UNSEEN_FLAG = 'UNSEEN'
@@ -46,6 +47,8 @@ class GmailWrapper:
 
     def getReplyTo(self, messageID, folder='INBOX'):
         self.setFolder(folder)
-        return self.server.fetch([messageID], ['From', 'RFC822'])
+        message_data = self.server.fetch([messageID], 'RFC822')
+        message = email.message_from_bytes(message_data[b"RFC822"])
+        return message
 
 #    def sendImagefile(self, filename):
