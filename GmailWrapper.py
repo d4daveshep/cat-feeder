@@ -2,6 +2,7 @@
 
 import email
 import logging
+import os.path
 import smtplib
 from email.header import Header
 from email.mime.image import MIMEImage
@@ -69,18 +70,17 @@ class GmailWrapper:
         msg['To'] = address
         msg['Subject'] = Header(subject, 'utf-8').encode()
 
-        msg_content = MIMEText('send with attachment...', 'plain', 'utf-8')
+        msg_content = MIMEText('photo attached is ' + os.path.basename(filename), 'plain', 'utf-8')
         msg.attach(msg_content)
 
         fp = open(filename, 'rb')
         img = MIMEImage(fp.read())
         fp.close()
 
-        img.add_header('Content-ID', '<image1>')
+        img.add_header('Content-Disposition', 'attachment', os.path.basename(filename))
         msg.attach(img)
 
         smtp = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-        #smtp.connect()
         smtp.login(self.userName, self.password)
         smtp.sendmail(self.userName, address, msg.as_string())
         smtp.quit()
