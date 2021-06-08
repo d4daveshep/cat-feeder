@@ -48,6 +48,9 @@ def sendPhoto():
             gmail_wrapper.sendImagefile('cat feeder photo at ' + timestamp, reply_address, photo_filename)
             logging.info('email sent')
 
+            # delete the image file
+            os.system('rm ' + photo_filename)
+
         except Exception as e:
             logging.error('FAILED to ' + SUBJECT_PHOTO, '%s', e)
 
