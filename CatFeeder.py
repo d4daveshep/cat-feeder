@@ -37,9 +37,9 @@ def sendPhoto():
             os.system('fswebcam --jpeg 95 --save ' + photoFilename)
 
             # send as email attachment
-            for uid, messageData in photoEmails:
-                emailMessage = email.message_from_bytes(messageData[b'RFC822'])
-                logging.info(emailMessage)
+            for i in photoEmails:
+#                emailMessage = email.message_from_bytes(messageData[b'RFC822'])
+                logging.info(photoEmails[i])
 
             # msg = photoEmails[0]
 
