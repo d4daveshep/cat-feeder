@@ -39,7 +39,7 @@ def sendPhoto():
             # send as email attachment
             for uid, messageData in photoEmails:
                 emailMessage = email.message_from_bytes(messageData[b'RFC822'])
-                logger.info(emailMessage)
+                logging.info(emailMessage)
 
             # msg = photoEmails[0]
 
