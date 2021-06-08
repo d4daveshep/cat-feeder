@@ -42,13 +42,8 @@ def sendPhoto():
             logging.info('reply address is ' + reply_address)
 
             # send as email attachment
-
-
-            # for i in photoEmails:
-
-            # msg = photoEmails[0]
-
-            # gmailWrapper.sendImagefile(from, photoFilename)
+            gmailWrapper.sendImagefile('cat feeder photo at ' + timestampStr, reply_address, photoFilename)
+            logging.info('email sent')
 
         except Exception as e:
             logging.error("FAILED to " + SUBJECT_PHOTO, "%s", e)
