@@ -109,7 +109,7 @@ def feed():
 if __name__ == '__main__':
     # configure logging
     logging.basicConfig(filename=WORKING_DIRECTORY + "feeder.log",
-                        level=logging.INFO,
+                        level=logging.DEBUG,
                         format='%(asctime)s %(message)s', datefmt='%d-%m-%Y %H:%M:%S')
 
     # feed by receiving email
