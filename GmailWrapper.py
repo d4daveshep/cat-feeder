@@ -46,6 +46,6 @@ class GmailWrapper:
 
     def getReplyTo(self, messageID, folder='INBOX'):
         self.setFolder(folder)
-        return self.server.fetch([messageID], ['FROM'])
+        return self.server.fetch([messageID], ['FLAGS'])
 
 #    def sendImagefile(self, filename):
