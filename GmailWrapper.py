@@ -79,8 +79,8 @@ class GmailWrapper:
         img.add_header('Content-ID', '<image1>')
         msg.attach(img)
 
-        smtp = smtplib.SMTP()
-        smtp.connect('smtp.gmail.com')
+        smtp = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+        #smtp.connect()
         smtp.login(self.userName, self.password)
         smtp.sendmail(self.userName, address, msg.as_string())
         smtp.quit()
