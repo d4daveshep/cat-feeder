@@ -49,7 +49,8 @@ class GmailWrapper:
         self.setFolder(folder)
         message_data = self.server.fetch([messageID], 'RFC822').get(messageID)
         email_message = email.message_from_bytes(message_data[b'RFC822'])
-        logging.info(['email message', email_message])
+        email_from = email_message.get('From')
+        logging.info(['email from... ', email_from])
 
         return
 
