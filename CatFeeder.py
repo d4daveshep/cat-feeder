@@ -36,10 +36,15 @@ def sendPhoto():
             # take photo
             os.system('fswebcam --jpeg 95 --save ' + photoFilename)
 
+            # get reply address
+            reply = gmailWrapper.getReplyTo(photoEmails[0])
+            logging.info('reply is...')
+            logging.info(reply)
+
             # send as email attachment
+
+
             # for i in photoEmails:
-#                emailMessage = email.message_from_bytes(messageData[b'RFC822'])
-            logging.info(photoEmails)
 
             # msg = photoEmails[0]
 
@@ -109,7 +114,7 @@ def feed():
 if __name__ == '__main__':
     # configure logging
     logging.basicConfig(filename=WORKING_DIRECTORY + "feeder.log",
-                        level=logging.DEBUG,
+                        level=logging.INFO,
                         format='%(asctime)s %(message)s', datefmt='%d-%m-%Y %H:%M:%S')
 
     # feed by receiving email
