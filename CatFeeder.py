@@ -107,6 +107,9 @@ if __name__ == '__main__':
     # feed by receiving email
     feedByGmail()
 
+    # send photo to requesting email
+    sendPhoto()
+
     # kick off the feeding process (move the servo)
 #    feed()
 
