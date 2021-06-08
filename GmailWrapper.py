@@ -77,7 +77,7 @@ class GmailWrapper:
         img = MIMEImage(fp.read())
         fp.close()
 
-        img.add_header('Content-Disposition', 'attachment; filename="%s"' % os.path.basename(filename))
+        img.add_header('Content-Disposition', 'attachment; filename=' + os.path.basename(filename))
         img.add_header()
         msg.attach(img)
 
