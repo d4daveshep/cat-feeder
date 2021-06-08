@@ -78,7 +78,7 @@ class GmailWrapper:
         fp.close()
 
         img.add_header('Content-Disposition', 'attachment; filename=' + os.path.basename(filename))
-        img.add_header()
+        #img.add_header()
         msg.attach(img)
 
         smtp = smtplib.SMTP_SSL('smtp.gmail.com', 465)
