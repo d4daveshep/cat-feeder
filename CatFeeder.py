@@ -37,9 +37,9 @@ def sendPhoto():
             os.system('fswebcam --jpeg 95 --save ' + photoFilename)
 
             # send as email attachment
-            for i in photoEmails:
+            # for i in photoEmails:
 #                emailMessage = email.message_from_bytes(messageData[b'RFC822'])
-                logging.info(photoEmails[i])
+            logging.info(photoEmails)
 
             # msg = photoEmails[0]
 
@@ -48,7 +48,7 @@ def sendPhoto():
             logging.info('saved' + photoFilename)
 
         except Exception as e:
-            logging.error("FAILED to" + SUBJECT_PHOTO, "%s", e)
+            logging.error("FAILED to " + SUBJECT_PHOTO, "%s", e)
 
     else:
         logging.info("no photos to take")
