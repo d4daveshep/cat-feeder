@@ -50,6 +50,7 @@ def sendPhoto():
 
             # delete the image file
             os.system('rm ' + photo_filename)
+            logging.info('deleted ' + photo_filename)
 
         except Exception as e:
             logging.error('FAILED to ' + SUBJECT_PHOTO, '%s', e)
