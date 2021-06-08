@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import email
 
 from GmailWrapper import GmailWrapper
 from datetime import datetime
@@ -36,6 +37,13 @@ def sendPhoto():
             os.system('fswebcam --jpeg 95 --save ' + photoFilename)
 
             # send as email attachment
+            for uid, messageData in photoEmails:
+                emailMessage = email.message_from_bytes(messageData[b'RFC822'])
+                logger.info(emailMessage)
+
+            # msg = photoEmails[0]
+
+            # gmailWrapper.sendImagefile(from, photoFilename)
 
             logging.info('saved' + photoFilename)
 
