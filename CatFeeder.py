@@ -35,11 +35,11 @@ def sendPhoto():
 
             # take photo
             os.system('fswebcam --jpeg 95 --save ' + photoFilename)
+            logging.info('saved ' + photoFilename)
 
             # get reply address
             reply_address = gmailWrapper.getReplyTo(photoEmails[0])
-            logging.info('reply address is... ')
-            logging.info(reply_address)
+            logging.info('reply address is ' + reply_address)
 
             # send as email attachment
 
@@ -49,8 +49,6 @@ def sendPhoto():
             # msg = photoEmails[0]
 
             # gmailWrapper.sendImagefile(from, photoFilename)
-
-            logging.info('saved' + photoFilename)
 
         except Exception as e:
             logging.error("FAILED to " + SUBJECT_PHOTO, "%s", e)
