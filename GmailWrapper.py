@@ -47,8 +47,9 @@ class GmailWrapper:
 
     def getReplyTo(self, messageID, folder='INBOX'):
         self.setFolder(folder)
-        message_data = self.server.fetch([messageID], 'RFC822')
+        message_data = self.server.fetch([messageID], 'RFC822').get(messageID)
         logging.info(['message data...', message_data])
+        #email_message = email.message_from_bytes(message_data)
         return
 
         #message = email.message_from_bytes(message_data)
