@@ -44,4 +44,4 @@ class GmailWrapper:
     def setFolder(self, folder):
         self.server.select_folder(folder)
 
-    def sendImagefile(self, filename):
+#    def sendImagefile(self, filename):
