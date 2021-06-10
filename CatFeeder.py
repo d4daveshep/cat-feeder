@@ -83,6 +83,8 @@ def feed():
     GPIO.setmode(GPIO.BOARD)
     GPIO.setup(GPIO_PIN, GPIO.OUT)
 
+    cycles = 2  # how many cycles do we want to run - this affects how much is dispensed
+
     try:
         servo = GPIO.PWM(GPIO_PIN, 50)
         servo.start(0)
@@ -91,13 +93,17 @@ def feed():
         servo.ChangeDutyCycle(dutycycle(0.0))
         time.sleep(0.5)
 
-        # spin to -60 deg
-        servo.ChangeDutyCycle(dutycycle(-60.0))
-        time.sleep(0.5)
+        count = 0  # current cycle count
+        while count < cycles:
+            # spin to -60 deg
+            servo.ChangeDutyCycle(dutycycle(-60.0))
+            time.sleep(0.5)
 
-        # spin to +60 deg
-        servo.ChangeDutyCycle(dutycycle(+60.0))
-        time.sleep(0.5)
+            # spin to +60 deg
+            servo.ChangeDutyCycle(dutycycle(+60.0))
+            time.sleep(0.5)
+
+            count = count + 1
 
         # end in neutral position
         servo.ChangeDutyCycle(dutycycle(0.0))
