@@ -83,7 +83,7 @@ def feed():
     GPIO.setmode(GPIO.BOARD)
     GPIO.setup(GPIO_PIN, GPIO.OUT)
 
-    cycles = 2  # how many cycles do we want to run - this affects how much is dispensed
+    cycles = 3  # how many cycles do we want to run - this affects how much is dispensed
 
     try:
         servo = GPIO.PWM(GPIO_PIN, 50)
