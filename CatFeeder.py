@@ -48,6 +48,8 @@ def sendPhoto():
             gmail_wrapper.sendImagefile('cat feeder photo at ' + timestamp, reply_address, photo_filename)
             logging.info('email sent')
 
+            gmail_wrapper.markAsRead(photo_emails)
+
             # delete the image file
             os.system('rm ' + photo_filename)
             logging.info('deleted ' + photo_filename)
