@@ -5,6 +5,7 @@ import os
 import subprocess
 import time
 from datetime import datetime
+from subprocess import CompletedProcess
 
 import RPi.GPIO as GPIO
 
@@ -64,11 +65,11 @@ def takePhoto(working_directory='/tmp/'):
         # take photo (skip a large number of frames to allow camera to adjust to lighting etc)
         # os.system('fswebcam -S 200 --jpeg 95 --save ' + filename)
 
-        subprocess.CompletedProcess
+        # subprocess.CompletedProcess
         cp = subprocess.run(['fswebcam -S 200 --jpeg 95 --save ' + filename],
                             shell=True, capture_output=True, universal_newlines=True)
-        logging.info(cp.stdout)
-        logging.info(cp.stderr)
+        logging.debug(cp.stdout)
+        logging.debug(cp.stderr)
         logging.info('saved ' + filename)
 
         return filename
