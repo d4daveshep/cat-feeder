@@ -7,7 +7,9 @@ Python code to control to Raspberry Pi automated cat feeder
 
 "git commit" to commit new changes to local repo
 
-"git push" to push committed changes to GitHub 
+"git push" to push committed changes to GitHub
+
+"git checkout -f" to ignore any local non-committed changes
 
 ## crontab on raspberry pi to run every minute
 m h  dom mon dow   command
