@@ -19,6 +19,7 @@ SUBJECT_PHOTO = 'TAKE PHOTO'
 
 GPIO_PIN = 11
 
+### TODO remove this path and specify as command line option
 WORKING_DIRECTORY = '/home/pi/dev/cat-feeder/images/'
 
 
