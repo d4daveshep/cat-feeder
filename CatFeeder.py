@@ -19,7 +19,7 @@ SUBJECT_PHOTO = 'TAKE PHOTO'
 
 GPIO_PIN = 11
 
-WORKING_DIRECTORY = '/home/pi/dev/cat-feeder/'
+WORKING_DIRECTORY = '/home/pi/dev/cat-feeder/images/'
 
 
 # check emails for a photo request, take webcam photo and send as reply
@@ -63,9 +63,6 @@ def takePhoto(working_directory='/tmp/'):
         filename = WORKING_DIRECTORY + timestamp + '.jpg'
 
         # take photo (skip a large number of frames to allow camera to adjust to lighting etc)
-        # os.system('fswebcam -S 200 --jpeg 95 --save ' + filename)
-
-        # subprocess.CompletedProcess
         cp = subprocess.run(['fswebcam -S 200 --jpeg 95 --save ' + filename],
                             shell=True, capture_output=True, universal_newlines=True)
         logging.debug(cp.stdout)
