@@ -39,7 +39,7 @@ def sendPhoto():
             logging.info('reply address is ' + reply_address)
 
             # send as email attachment
-            gmail_wrapper.sendImagefile('cat feeder photo at ' + timestamp, reply_address, photo_filename)
+            gmail_wrapper.sendImagefile('cat feeder photo', reply_address, photo_filename)
             logging.info('email sent')
 
             gmail_wrapper.markAsRead(photo_emails)
