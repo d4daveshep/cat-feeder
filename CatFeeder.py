@@ -2,6 +2,7 @@
 
 import logging
 import os
+import subprocess
 import time
 from datetime import datetime
 
@@ -61,7 +62,8 @@ def takePhoto(working_directory='/tmp/'):
         filename = WORKING_DIRECTORY + timestamp + '.jpg'
 
         # take photo (skip a large number of frames to allow camera to adjust to lighting etc)
-        os.system('fswebcam -S 200 --jpeg 95 --save ' + filename)
+        #os.system('fswebcam -S 200 --jpeg 95 --save ' + filename)
+        logging.info(subprocess.run('fswebcam -S 200 --jpeg 95 --save ' + filename, capture_output=True))
         logging.info('saved ' + filename)
 
         return filename
