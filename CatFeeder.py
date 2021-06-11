@@ -37,7 +37,7 @@ def sendPhoto():
             photo_filename = WORKING_DIRECTORY + timestamp + '.jpg'
 
             # take photo
-            os.system('fswebcam --jpeg 95 --save ' + photo_filename)
+            os.system('fswebcam -S 5 --jpeg 95 --save ' + photo_filename)
             logging.info('saved ' + photo_filename)
 
             # get reply address
