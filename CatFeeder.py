@@ -36,7 +36,7 @@ def sendPhoto():
             timestamp = date_time_obj.strftime("%Y%m%d-%H%M")
             photo_filename = WORKING_DIRECTORY + timestamp + '.jpg'
 
-            # take photo
+            # take photo (skip a large number of frames to allow camera to adjust to lighting etc)
             os.system('fswebcam -S 200 --jpeg 95 --save ' + photo_filename)
             logging.info('saved ' + photo_filename)
 
@@ -122,7 +122,7 @@ if __name__ == '__main__':
     # configure logging
     logging.basicConfig(filename=WORKING_DIRECTORY + 'feeder.log',
                         level=logging.INFO,
-                        format='%(asctime)s %(message)s', datefmt='%d-%m-%Y %H:%M:%S')
+                        format='%(asctime)s %(levelname)s %(message)s', datefmt='%d-%m-%Y %H:%M:%S')
 
     # feed by receiving email
     feedByGmail()
