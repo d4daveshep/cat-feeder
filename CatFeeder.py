@@ -62,12 +62,13 @@ def takePhoto(working_directory='/tmp/'):
         filename = WORKING_DIRECTORY + timestamp + '.jpg'
 
         # take photo (skip a large number of frames to allow camera to adjust to lighting etc)
-        #os.system('fswebcam -S 200 --jpeg 95 --save ' + filename)
+        # os.system('fswebcam -S 200 --jpeg 95 --save ' + filename)
 
         subprocess.CompletedProcess
-        cp = subprocess.run(['fswebcam -S 200 --jpeg 95 --save ' + filename], shell=True, capture_output=True)
+        cp = subprocess.run(['fswebcam -S 200 --jpeg 95 --save ' + filename],
+                            shell=True, capture_output=True, universal_newlines=True)
         logging.info(cp.stdout)
-        logging.error(cp.stderr)
+        logging.info(cp.stderr)
         logging.info('saved ' + filename)
 
         return filename
