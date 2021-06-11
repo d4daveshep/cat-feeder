@@ -95,11 +95,11 @@ def feed():
 
         count = 0  # current cycle count
         while count < cycles:
-            # spin to -60 deg
+            # spin to -ve deg
             servo.ChangeDutyCycle(dutycycle(-60.0))
             time.sleep(0.5)
 
-            # spin to +60 deg
+            # spin to +ve deg
             servo.ChangeDutyCycle(dutycycle(+60.0))
             time.sleep(0.5)
 
