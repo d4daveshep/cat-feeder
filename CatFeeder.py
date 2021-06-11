@@ -84,30 +84,31 @@ def feed():
     GPIO.setup(GPIO_PIN, GPIO.OUT)
 
     cycles = 3  # how many cycles do we want to run - this affects how much is dispensed
+    angle = 60.0  # rotation angle positive and negative
 
     try:
         servo = GPIO.PWM(GPIO_PIN, 50)
         servo.start(0)
 
         # start in neutral position
-        servo.ChangeDutyCycle(dutycycle(0.0))
-        time.sleep(0.5)
+        # servo.ChangeDutyCycle(dutycycle(0.0))
+        # time.sleep(0.5)
 
         count = 0  # current cycle count
         while count < cycles:
             # spin to -ve deg
-            servo.ChangeDutyCycle(dutycycle(-60.0))
-            time.sleep(0.5)
+            servo.ChangeDutyCycle(dutycycle(-angle))
+            time.sleep(1.0)
 
             # spin to +ve deg
-            servo.ChangeDutyCycle(dutycycle(+60.0))
-            time.sleep(0.5)
+            servo.ChangeDutyCycle(dutycycle(+angle))
+            time.sleep(1.0)
 
             count = count + 1
 
-        # end in neutral position
-        servo.ChangeDutyCycle(dutycycle(0.0))
-        time.sleep(0.5)
+        # always end in positive angle
+        servo.ChangeDutyCycle(dutycycle(+angle))
+        time.sleep(1.0)
 
     finally:
         # always cleanup after ourselves
