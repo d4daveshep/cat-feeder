@@ -31,14 +31,8 @@ def sendPhoto():
     else:
         logging.info("got %d email to " + SUBJECT_PHOTO, len(photo_emails))
         try:
-            # make filename with timestamp
-            date_time_obj = datetime.now()
-            timestamp = date_time_obj.strftime("%Y%m%d-%H%M")
-            photo_filename = WORKING_DIRECTORY + timestamp + '.jpg'
-
-            # take photo (skip a large number of frames to allow camera to adjust to lighting etc)
-            os.system('fswebcam -S 200 --jpeg 95 --save ' + photo_filename)
-            logging.info('saved ' + photo_filename)
+            # take photo
+            photo_filename = takePhoto(WORKING_DIRECTORY)
 
             # get reply address
             reply_address = gmail_wrapper.getReplyTo(photo_emails[0])
@@ -56,6 +50,24 @@ def sendPhoto():
 
         except Exception as e:
             logging.error('FAILED to ' + SUBJECT_PHOTO, '%s', e)
+
+
+# take a webcam photo, storing it in working directory and returning the file path & name
+def takePhoto(working_directory='/tmp/'):
+    try:
+        # make filename with timestamp
+        date_time_obj = datetime.now()
+        timestamp = date_time_obj.strftime("%Y%m%d-%H%M")
+        filename = WORKING_DIRECTORY + timestamp + '.jpg'
+
+        # take photo (skip a large number of frames to allow camera to adjust to lighting etc)
+        os.system('fswebcam -S 200 --jpeg 95 --save ' + filename)
+        logging.info('saved ' + filename)
+
+        return filename
+
+    except Exception as e:
+        logging.error('Failed to take photo', e)
 
 
 # dutycycle calculation for Jaycar YM2763 servo
