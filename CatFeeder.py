@@ -47,6 +47,7 @@ def sendPhoto():
 
             gmail_wrapper.markAsRead(photo_emails)
 
+            ### TODO add this as an option too
             # delete the image file
             os.system('rm ' + photo_filename)
             logging.info('deleted ' + photo_filename)
