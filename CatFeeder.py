@@ -20,7 +20,7 @@ SUBJECT_PHOTO = 'TAKE PHOTO'
 GPIO_PIN = 11
 
 ### TODO remove this path and specify as command line option
-WORKING_DIRECTORY = '/home/pi/dev/cat-feeder/images/'
+WORKING_DIRECTORY = '/home/pi/dev/cat-feeder/photos/'
 
 
 # check emails for a photo request, take webcam photo and send as reply
