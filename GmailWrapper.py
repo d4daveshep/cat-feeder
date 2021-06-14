@@ -64,7 +64,6 @@ class GmailWrapper:
         # return message_data
 
     def sendImagefile(self, subject, to_address, filename):
-
         # create email object that has multiple part
         msg = MIMEMultipart()
         msg['From'] = self.userName
@@ -90,6 +89,28 @@ class GmailWrapper:
         smtp.sendmail(self.userName, to_address, msg.as_string())
         smtp.quit()
 
+    def sendTextfile(self, subject, to_address, filename):
+        # create email object that has multiple part
+        msg = MIMEMultipart()
+        msg['From'] = self.userName
+        msg['To'] = to_address
+        msg['Subject'] = Header(subject, 'utf-8').encode()
 
+        # add message content
+        msg_content = MIMEText('log file attached is ' + os.path.basename(filename), 'plain', 'utf-8')
+        msg.attach(msg_content)
 
+        # read the text file
+        fp = open(filename, 'r')
+        text = MIMEText(fp.read())
+        fp.close()
 
+        # add the image
+        text.add_header('Content-Disposition', 'attachment; filename=' + os.path.basename(filename))
+        msg.attach(text)
+
+        # send message securely
+        smtp = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+        smtp.login(self.userName, self.password)
+        smtp.sendmail(self.userName, to_address, msg.as_string())
+        smtp.quit()

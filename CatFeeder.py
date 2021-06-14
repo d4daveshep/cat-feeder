@@ -15,44 +15,46 @@ USERNAME = 'cat-feeder@daveshep.net.nz'
 PASSWORD = 'vhov zueo fyas bkxd'
 SUBJECT_FEED = 'FEED CATS'  # case insensitive
 SUBJECT_PHOTO = 'TAKE PHOTO'
+SUBJECT_GET_LOG = 'GET LOG'
 
 GPIO_PIN = 11
 
 WORKING_DIRECTORY = os.path.dirname(__file__) + '/'  # was '/home/pi/dev/cat-feeder/'
+LOG_FILE = WORKING_DIRECTORY + 'feeder.log'
 
 
 # check emails for a photo request, take webcam photo and send as reply
-def sendPhoto():
-    logging.info("checking email at " + USERNAME)
-    gmail_wrapper = GmailWrapper(HOSTNAME, USERNAME, PASSWORD)
-    photo_emails = gmail_wrapper.getIdsBySubject(SUBJECT_PHOTO)
-
-    if len(photo_emails) == 0:
-        logging.info('no photos to take')
-
-    else:
-        logging.info("got %d email to " + SUBJECT_PHOTO, len(photo_emails))
-        try:
-            # take photo
-            photo_filename = takePhoto(WORKING_DIRECTORY)
-
-            # get reply address
-            reply_address = gmail_wrapper.getReplyTo(photo_emails[0])
-            logging.info('reply address is ' + reply_address)
-
-            # send as email attachment
-            gmail_wrapper.sendImagefile('cat feeder photo', reply_address, photo_filename)
-            logging.info('email sent')
-
-            gmail_wrapper.markAsRead(photo_emails)
-
-            ### TODO add this as an option too
-            # delete the image file
-            os.system('rm ' + photo_filename)
-            logging.info('deleted ' + photo_filename)
-
-        except Exception as e:
-            logging.error('FAILED to ' + SUBJECT_PHOTO + ': ' + str(e))
+# def sendPhoto():
+#     logging.info("checking email at " + USERNAME)
+#     gmail_wrapper = GmailWrapper(HOSTNAME, USERNAME, PASSWORD)
+#     photo_emails = gmail_wrapper.getIdsBySubject(SUBJECT_PHOTO)
+#
+#     if len(photo_emails) == 0:
+#         logging.info('no photos to take')
+#
+#     else:
+#         logging.info("got %d email to " + SUBJECT_PHOTO, len(photo_emails))
+#         try:
+#             # take photo
+#             photo_filename = takePhoto(WORKING_DIRECTORY)
+#
+#             # get reply address
+#             reply_address = gmail_wrapper.getReplyTo(photo_emails[0])
+#             logging.info('reply address is ' + reply_address)
+#
+#             # send as email attachment
+#             gmail_wrapper.sendImagefile('cat feeder photo', reply_address, photo_filename)
+#             logging.info('email sent')
+#
+#             gmail_wrapper.markAsRead(photo_emails)
+#
+#             ### TODO add this as an option too
+#             # delete the image file
+#             os.system('rm ' + photo_filename)
+#             logging.info('deleted ' + photo_filename)
+#
+#         except Exception as e:
+#             logging.error('FAILED to ' + SUBJECT_PHOTO + ': ' + str(e))
 
 
 # take a webcam photo, storing it in working directory and returning the file path & name
@@ -155,7 +157,6 @@ def emailActions():
 
     # check for take photo emails
     photo_emails = gmail_wrapper.getIdsBySubject(SUBJECT_PHOTO)
-
     if len(photo_emails) > 0:
         logging.info("got %d email to " + SUBJECT_PHOTO, len(photo_emails))
         nothing_to_do = False
@@ -182,14 +183,32 @@ def emailActions():
         except Exception as e:
             logging.error('FAILED to ' + SUBJECT_PHOTO + ': ' + str(e))
 
+    get_log_emails = gmail_wrapper.getIdsBySubject(SUBJECT_GET_LOG)
+    if len(get_log_emails) > 0:
+        logging.info("got %d email to " + SUBJECT_GET_LOG, len(get_log_emails))
+        nothing_to_do = False
+
+        try:
+            reply_address = gmail_wrapper.getReplyTo(get_log_emails[0])
+            logging.info('reply address is ' + reply_address)
+
+            # send as email attachment
+            gmail_wrapper.sendTextfile('cat feeder log file', reply_address, LOG_FILE)
+            logging.info('log file sent')
+
+            gmail_wrapper.markAsRead(get_log_emails)
+
+
+        except Exception as e:
+            logging.error('FAILED to ' + SUBJECT_GET_LOG + ': ' + str(e))
+
     if nothing_to_do is True:
         logging.info('nothing to do')
 
 
 if __name__ == '__main__':
     # configure logging
-    logging.basicConfig(filename=WORKING_DIRECTORY + 'feeder.log',
-                        level=logging.INFO,
+    logging.basicConfig(filename=LOG_FILE, level=logging.INFO,
                         format='%(asctime)s %(levelname)s %(message)s', datefmt='%d-%m-%Y %H:%M:%S')
     # email actions
     emailActions()
