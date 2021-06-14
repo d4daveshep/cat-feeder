@@ -149,7 +149,7 @@ def emailActions():
         try:
             feed()
             gmail_wrapper.markAsRead(feed_emails)
-            logging.info('completed successfully')
+            logging.info('fed cats successfully')
         except Exception as e:
             logging.error('FAILED to' + SUBJECT_FEED, '%s', e)
 
@@ -170,7 +170,7 @@ def emailActions():
 
             # send as email attachment
             gmail_wrapper.sendImagefile('cat feeder photo', reply_address, photo_filename)
-            logging.info('email sent')
+            logging.info('photo taken and sent')
 
             gmail_wrapper.markAsRead(photo_emails)
 
