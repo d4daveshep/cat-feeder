@@ -19,7 +19,7 @@ SUBJECT_PHOTO = 'TAKE PHOTO'
 
 GPIO_PIN = 11
 
-WORKING_DIRECTORY = os.path.dirname(__file__)  # was '/home/pi/dev/cat-feeder/photos/'
+WORKING_DIRECTORY = '/tmp/'
 
 # check emails for a photo request, take webcam photo and send as reply
 def sendPhoto():
@@ -135,6 +135,9 @@ def feed():
 
 
 if __name__ == '__main__':
+
+    WORKING_DIRECTORY = os.path.dirname(__file__)  # was '/home/pi/dev/cat-feeder/photos/'
+
     # configure logging
     logging.basicConfig(filename=WORKING_DIRECTORY + 'feeder.log',
                         level=logging.INFO,
