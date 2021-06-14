@@ -29,6 +29,7 @@ def sendPhoto():
     gmail_wrapper = GmailWrapper(HOSTNAME, USERNAME, PASSWORD)
     photo_emails = gmail_wrapper.getIdsBySubject(SUBJECT_PHOTO)
     logging.info('working directory is... ' + os.getcwd())
+    logging.info('path to this script is... ' + os.path.realpath(__file__))
     if len(photo_emails) == 0:
         logging.info('no photos to take')
 
