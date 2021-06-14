@@ -71,9 +71,9 @@ def takePhoto(working_directory='/tmp/'):
         # take photo (skip a large number of frames to allow camera to adjust to lighting etc)
         cp = subprocess.run(['fswebcam -S 200 --jpeg 95 --save ' + filename],
                             shell=True, capture_output=True, universal_newlines=True)
-        if cp.returncode != 0:
-            # logging.info(cp.stderr)
-            raise Exception(cp.stdout, cp.stderr)
+        #if cp.returncode != 0:
+        logging.info('cp.returncode = ' + cp.returncode)
+         #   raise Exception(cp.stdout, cp.stderr)
 
         # logging.info(cp.stdout)
         # logging.info(cp.stderr)
