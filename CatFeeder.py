@@ -20,7 +20,7 @@ SUBJECT_PHOTO = 'TAKE PHOTO'
 GPIO_PIN = 11
 
 ### TODO remove this path and specify as command line option
-WORKING_DIRECTORY = '/home/pi/dev/cat-feeder/photos/'
+WORKING_DIRECTORY = os.path.dirname(__file__)  # was '/home/pi/dev/cat-feeder/photos/'
 
 
 # check emails for a photo request, take webcam photo and send as reply
@@ -29,8 +29,8 @@ def sendPhoto():
     gmail_wrapper = GmailWrapper(HOSTNAME, USERNAME, PASSWORD)
     photo_emails = gmail_wrapper.getIdsBySubject(SUBJECT_PHOTO)
 
-    logging.info('working directory is... ' + os.getcwd())
-    logging.info('path to this script is... ' + os.path.dirname(__file__))
+    # logging.info('working directory is... ' + os.getcwd())
+    # logging.info('path to this script is... ' + os.path.dirname(__file__))
 
     if len(photo_emails) == 0:
         logging.info('no photos to take')
