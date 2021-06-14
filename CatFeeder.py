@@ -20,6 +20,7 @@ GPIO_PIN = 11
 
 WORKING_DIRECTORY = os.path.dirname(__file__) + '/'  # was '/home/pi/dev/cat-feeder/'
 
+
 # check emails for a photo request, take webcam photo and send as reply
 def sendPhoto():
     logging.info("checking email at " + USERNAME)
@@ -79,20 +80,20 @@ def dutycycle(angle):
     return (angle + 90) / 20.0 + 3.0  # -90.0 < angle < +90.0
 
 
-def feedByGmail():
-    logging.info('checking email at ' + USERNAME)
-    gmail_wrapper = GmailWrapper(HOSTNAME, USERNAME, PASSWORD)
-    feed_emails = gmail_wrapper.getIdsBySubject(SUBJECT_FEED)
-    if len(feed_emails) == 0:
-        logging.info('no feeding to do')
-    else:
-        logging.info('got %d email to ' + SUBJECT_FEED, len(feed_emails))
-        try:
-            feed()
-            gmail_wrapper.markAsRead(feed_emails)
-            logging.info('completed successfully')
-        except Exception as e:
-            logging.error('FAILED to' + SUBJECT_FEED, '%s', e)
+# def feedByGmail():
+#     logging.info('checking email at ' + USERNAME)
+#     gmail_wrapper = GmailWrapper(HOSTNAME, USERNAME, PASSWORD)
+#     feed_emails = gmail_wrapper.getIdsBySubject(SUBJECT_FEED)
+#     if len(feed_emails) == 0:
+#         logging.info('no feeding to do')
+#     else:
+#         logging.info('got %d email to ' + SUBJECT_FEED, len(feed_emails))
+#         try:
+#             feed()
+#             gmail_wrapper.markAsRead(feed_emails)
+#             logging.info('completed successfully')
+#         except Exception as e:
+#             logging.error('FAILED to' + SUBJECT_FEED, '%s', e)
 
 
 def feed():
@@ -134,17 +135,70 @@ def feed():
         GPIO.cleanup()
 
 
+def emailActions():
+    logging.info('checking email at ' + USERNAME)
+    gmail_wrapper = GmailWrapper(HOSTNAME, USERNAME, PASSWORD)
+
+    nothing_to_do = True
+
+    # check for feed emails
+    feed_emails = gmail_wrapper.getIdsBySubject(SUBJECT_FEED)
+    if len(feed_emails) > 0:
+        logging.info('got %d email to ' + SUBJECT_FEED, len(feed_emails))
+        nothing_to_do = False
+        try:
+            feed()
+            gmail_wrapper.markAsRead(feed_emails)
+            logging.info('completed successfully')
+        except Exception as e:
+            logging.error('FAILED to' + SUBJECT_FEED, '%s', e)
+
+    # check for take photo emails
+    photo_emails = gmail_wrapper.getIdsBySubject(SUBJECT_PHOTO)
+
+    if len(photo_emails) > 0:
+        logging.info("got %d email to " + SUBJECT_PHOTO, len(photo_emails))
+        nothing_to_do = False
+
+        try:
+            # take photo
+            photo_filename = takePhoto(WORKING_DIRECTORY)
+
+            # get reply address
+            reply_address = gmail_wrapper.getReplyTo(photo_emails[0])
+            logging.info('reply address is ' + reply_address)
+
+            # send as email attachment
+            gmail_wrapper.sendImagefile('cat feeder photo', reply_address, photo_filename)
+            logging.info('email sent')
+
+            gmail_wrapper.markAsRead(photo_emails)
+
+            ### TODO add this as an option too
+            # delete the image file
+            os.system('rm ' + photo_filename)
+            logging.info('deleted ' + photo_filename)
+
+        except Exception as e:
+            logging.error('FAILED to ' + SUBJECT_PHOTO + ': ' + str(e))
+
+    if nothing_to_do is True:
+        logging.info('nothing to do')
+
+
 if __name__ == '__main__':
     # configure logging
     logging.basicConfig(filename=WORKING_DIRECTORY + 'feeder.log',
                         level=logging.INFO,
                         format='%(asctime)s %(levelname)s %(message)s', datefmt='%d-%m-%Y %H:%M:%S')
+    # email actions
+    emailActions()
 
     # feed by receiving email
-    feedByGmail()
+    # feedByGmail()
 
     # send photo to requesting email
-    sendPhoto()
+    # sendPhoto()
 
     # kick off the feeding process (move the servo)
 #    feed()
