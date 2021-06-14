@@ -19,7 +19,7 @@ SUBJECT_PHOTO = 'TAKE PHOTO'
 GPIO_PIN = 11
 
 # WORKING_DIRECTORY = '/tmp/'
-WORKING_DIRECTORY = os.path.dirname(__file__)  # was '/home/pi/dev/cat-feeder/'
+WORKING_DIRECTORY = os.path.dirname(__file__) + '/'  # was '/home/pi/dev/cat-feeder/'
 
 
 # check emails for a photo request, take webcam photo and send as reply
