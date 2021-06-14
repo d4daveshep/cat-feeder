@@ -19,18 +19,13 @@ SUBJECT_PHOTO = 'TAKE PHOTO'
 
 GPIO_PIN = 11
 
-### TODO remove this path and specify as command line option
 WORKING_DIRECTORY = os.path.dirname(__file__)  # was '/home/pi/dev/cat-feeder/photos/'
-
 
 # check emails for a photo request, take webcam photo and send as reply
 def sendPhoto():
     logging.info("checking email at " + USERNAME)
     gmail_wrapper = GmailWrapper(HOSTNAME, USERNAME, PASSWORD)
     photo_emails = gmail_wrapper.getIdsBySubject(SUBJECT_PHOTO)
-
-    # logging.info('working directory is... ' + os.getcwd())
-    # logging.info('path to this script is... ' + os.path.dirname(__file__))
 
     if len(photo_emails) == 0:
         logging.info('no photos to take')
@@ -62,8 +57,6 @@ def sendPhoto():
 
 # take a webcam photo, storing it in working directory and returning the file path & name
 def takePhoto(working_directory='/tmp/'):
-    #    try:
-    # make filename with timestamp
     date_time_obj = datetime.now()
     timestamp = date_time_obj.strftime("%Y%m%d-%H%M")
     filename = WORKING_DIRECTORY + timestamp + '.jpg'
@@ -74,16 +67,11 @@ def takePhoto(working_directory='/tmp/'):
 
     # cp.returncode is not working properly so check specifically if filename was created
     if os.path.exists(filename) is False:
-        msg = 'Failed to take photo. Check webcam is connected and working'
-        logging.error(msg)
+        msg = 'Failed to capture photo. Check webcam is connected and working'
         raise Exception(msg)
     else:
         logging.info('saved ' + filename)
         return filename
-
-
-#   except Exception as e:
-#       logging.error('Failed to take photo', e)
 
 
 # dutycycle calculation for Jaycar YM2763 servo
