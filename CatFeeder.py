@@ -57,7 +57,7 @@ def sendPhoto():
             logging.info('deleted ' + photo_filename)
 
         except Exception as e:
-            logging.error('FAILED to ' + SUBJECT_PHOTO, '%s', e)
+            logging.error('FAILED to ' + SUBJECT_PHOTO, e)
 
 
 # take a webcam photo, storing it in working directory and returning the file path & name
