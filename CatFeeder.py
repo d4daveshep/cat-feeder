@@ -72,7 +72,7 @@ def takePhoto(working_directory='/tmp/'):
         cp = subprocess.run(['fswebcam -S 200 --jpeg 95 --save ' + filename],
                             shell=True, capture_output=True, universal_newlines=True)
         #if cp.returncode != 0:
-        logging.info('cp.returncode = ' + cp.returncode)
+        logging.info('cp.returncode = ' + str(cp.returncode))
          #   raise Exception(cp.stdout, cp.stderr)
 
         # logging.info(cp.stdout)
