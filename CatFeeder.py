@@ -62,27 +62,28 @@ def sendPhoto():
 
 # take a webcam photo, storing it in working directory and returning the file path & name
 def takePhoto(working_directory='/tmp/'):
-    try:
-        # make filename with timestamp
-        date_time_obj = datetime.now()
-        timestamp = date_time_obj.strftime("%Y%m%d-%H%M")
-        filename = WORKING_DIRECTORY + timestamp + '.jpg'
+    #    try:
+    # make filename with timestamp
+    date_time_obj = datetime.now()
+    timestamp = date_time_obj.strftime("%Y%m%d-%H%M")
+    filename = WORKING_DIRECTORY + timestamp + '.jpg'
 
-        # take photo (skip a large number of frames to allow camera to adjust to lighting etc)
-        cp = subprocess.run(['fswebcam -S 200 --jpeg 95 --save ' + filename],
-                            shell=True, capture_output=True, universal_newlines=True)
-        #if cp.returncode != 0:
-        logging.info('cp.returncode = ' + str(cp.returncode))
-         #   raise Exception(cp.stdout, cp.stderr)
+    # take photo (skip a large number of frames to allow camera to adjust to lighting etc)
+    cp = subprocess.run(['fswebcam -S 200 --jpeg 95 --save ' + filename],
+                        shell=True, capture_output=True, universal_newlines=True)
 
-        # logging.info(cp.stdout)
-        # logging.info(cp.stderr)
+    # cp.returncode is not working properly so check specifically if filename was created
+    if os.path.exists(filename) is False:
+        msg = 'Failed to take photo. Check webcam is connected and working'
+        logging.error(msg)
+        raise Exception(msg)
+    else:
         logging.info('saved ' + filename)
-
         return filename
 
-    except Exception as e:
-        logging.error('Failed to take photo', e)
+
+#   except Exception as e:
+#       logging.error('Failed to take photo', e)
 
 
 # dutycycle calculation for Jaycar YM2763 servo
