@@ -18,7 +18,6 @@ SUBJECT_PHOTO = 'TAKE PHOTO'
 
 GPIO_PIN = 11
 
-# WORKING_DIRECTORY = '/tmp/'
 WORKING_DIRECTORY = os.path.dirname(__file__) + '/'  # was '/home/pi/dev/cat-feeder/'
 
 
@@ -103,7 +102,7 @@ def feed():
     GPIO.setmode(GPIO.BOARD)
     GPIO.setup(GPIO_PIN, GPIO.OUT)
 
-    cycles = 3  # how many cycles do we want to run - this affects how much is dispensed
+    cycles = 2  # how many cycles do we want to run - this affects how much is dispensed
     angle = 60.0  # rotation angle positive and negative
 
     try:
