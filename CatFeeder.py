@@ -5,7 +5,6 @@ import os
 import subprocess
 import time
 from datetime import datetime
-from subprocess import CompletedProcess
 
 import RPi.GPIO as GPIO
 
@@ -19,7 +18,9 @@ SUBJECT_PHOTO = 'TAKE PHOTO'
 
 GPIO_PIN = 11
 
-WORKING_DIRECTORY = '/tmp/'
+# WORKING_DIRECTORY = '/tmp/'
+WORKING_DIRECTORY = os.path.dirname(__file__)  # was '/home/pi/dev/cat-feeder/'
+
 
 # check emails for a photo request, take webcam photo and send as reply
 def sendPhoto():
@@ -70,6 +71,7 @@ def takePhoto(working_directory='/tmp/'):
         msg = 'Failed to capture photo. Check webcam is connected and working'
         raise Exception(msg)
     else:
+        logging.debug(cp.stdout)
         logging.info('saved ' + filename)
         return filename
 
@@ -135,9 +137,6 @@ def feed():
 
 
 if __name__ == '__main__':
-
-    WORKING_DIRECTORY = os.path.dirname(__file__)  # was '/home/pi/dev/cat-feeder/photos/'
-
     # configure logging
     logging.basicConfig(filename=WORKING_DIRECTORY + 'feeder.log',
                         level=logging.INFO,
