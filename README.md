@@ -14,5 +14,9 @@ Python code to control to Raspberry Pi automated cat feeder
 ## crontab on raspberry pi to run every minute
 ```
 m h  dom mon dow   command
+# Check every minute for cat feeder instructions
 * * * * * python3 /home/pi/dev/cat-feeder/CatFeeder.py
+
+# Rotate log files daily at midnight
+0 0 * * * logrotate -s /home/pi/dev/cat-feeder/logs/logrotate.status /home/pi/dev/cat-feeder/logrotate.config
 ```
