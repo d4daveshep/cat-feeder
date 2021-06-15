@@ -20,7 +20,7 @@ SUBJECT_GET_LOG = 'GET LOG'
 GPIO_PIN = 11
 
 WORKING_DIRECTORY = os.path.dirname(__file__) + '/'  # was '/home/pi/dev/cat-feeder/'
-LOG_FILE = WORKING_DIRECTORY + 'logs/feeder.log'man
+LOG_FILE = WORKING_DIRECTORY + 'logs/feeder.log'
 
 
 # check emails for a photo request, take webcam photo and send as reply
