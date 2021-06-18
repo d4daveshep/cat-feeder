@@ -112,8 +112,8 @@ def feed():
         servo.start(0)
 
         # start in neutral position
-        # servo.ChangeDutyCycle(dutycycle(0.0))
-        # time.sleep(0.5)
+        servo.ChangeDutyCycle(dutycycle(0.0))
+        time.sleep(0.5)
 
         count = 0  # current cycle count
         while count < cycles:
@@ -127,9 +127,9 @@ def feed():
 
             count = count + 1
 
-        # always end in positive angle
-        servo.ChangeDutyCycle(dutycycle(+angle))
-        time.sleep(1.0)
+        # always end in neutral position
+        servo.ChangeDutyCycle(dutycycle(0.0))
+        time.sleep(0.5)
 
     finally:
         # always cleanup after ourselves
