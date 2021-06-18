@@ -29,6 +29,10 @@ class GmailWrapper:
         server.login(self.userName, self.password)
         self.server = server
 
+    def logout(self):
+        logging.debug('Logging out of IMAPClient from GmailWrapper')
+        self.server.logout()
+
     #   The IMAPClient search returns a list of Id's that match the given criteria.
     #   An Id in this case identifies a specific email
     def getIdsBySubject(self, subject, unreadonly=True, folder='INBOX'):

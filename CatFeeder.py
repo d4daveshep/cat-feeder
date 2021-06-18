@@ -198,12 +198,14 @@ def emailActions():
 
             gmail_wrapper.markAsRead(get_log_emails)
 
-
         except Exception as e:
             logging.error('FAILED to ' + SUBJECT_GET_LOG + ': ' + str(e))
 
     if nothing_to_do is True:
         logging.info('nothing to do')
+
+    gmail_wrapper.logout()
+    logging.info('logged out from email server')
 
 
 if __name__ == '__main__':
