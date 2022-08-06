@@ -23,42 +23,8 @@ WORKING_DIRECTORY = os.path.dirname(__file__) + '/'  # was '/home/pi/dev/cat-fee
 LOG_FILE = WORKING_DIRECTORY + 'logs/feeder.log'
 
 
-# check emails for a photo request, take webcam photo and send as reply
-# def sendPhoto():
-#     logging.info("checking email at " + USERNAME)
-#     gmail_wrapper = GmailWrapper(HOSTNAME, USERNAME, PASSWORD)
-#     photo_emails = gmail_wrapper.getIdsBySubject(SUBJECT_PHOTO)
-#
-#     if len(photo_emails) == 0:
-#         logging.info('no photos to take')
-#
-#     else:
-#         logging.info("got %d email to " + SUBJECT_PHOTO, len(photo_emails))
-#         try:
-#             # take photo
-#             photo_filename = takePhoto(WORKING_DIRECTORY)
-#
-#             # get reply address
-#             reply_address = gmail_wrapper.getReplyTo(photo_emails[0])
-#             logging.info('reply address is ' + reply_address)
-#
-#             # send as email attachment
-#             gmail_wrapper.sendImagefile('cat feeder photo', reply_address, photo_filename)
-#             logging.info('email sent')
-#
-#             gmail_wrapper.markAsRead(photo_emails)
-#
-#             ### TODO add this as an option too
-#             # delete the image file
-#             os.system('rm ' + photo_filename)
-#             logging.info('deleted ' + photo_filename)
-#
-#         except Exception as e:
-#             logging.error('FAILED to ' + SUBJECT_PHOTO + ': ' + str(e))
-
-
 # take a webcam photo, storing it in working directory and returning the file path & name
-def takePhoto(working_directory='/tmp/'):
+def take_photo(working_directory='/tmp/'):
     date_time_obj = datetime.now()
     timestamp = date_time_obj.strftime("%Y%m%d-%H%M")
     filename = WORKING_DIRECTORY + timestamp + '.jpg'
@@ -80,22 +46,6 @@ def takePhoto(working_directory='/tmp/'):
 # dutycycle calculation for Jaycar YM2763 servo
 def dutycycle(angle):
     return (angle + 90) / 20.0 + 3.0  # -90.0 < angle < +90.0
-
-
-# def feedByGmail():
-#     logging.info('checking email at ' + USERNAME)
-#     gmail_wrapper = GmailWrapper(HOSTNAME, USERNAME, PASSWORD)
-#     feed_emails = gmail_wrapper.getIdsBySubject(SUBJECT_FEED)
-#     if len(feed_emails) == 0:
-#         logging.info('no feeding to do')
-#     else:
-#         logging.info('got %d email to ' + SUBJECT_FEED, len(feed_emails))
-#         try:
-#             feed()
-#             gmail_wrapper.markAsRead(feed_emails)
-#             logging.info('completed successfully')
-#         except Exception as e:
-#             logging.error('FAILED to' + SUBJECT_FEED, '%s', e)
 
 
 def feed():
@@ -137,7 +87,7 @@ def feed():
         GPIO.cleanup()
 
 
-def emailActions():
+def email_actions():
     logging.info('checking email at ' + USERNAME)
     gmail_wrapper = GmailWrapper(HOSTNAME, USERNAME, PASSWORD)
 
@@ -163,7 +113,7 @@ def emailActions():
 
         try:
             # take photo
-            photo_filename = takePhoto(WORKING_DIRECTORY)
+            photo_filename = take_photo(WORKING_DIRECTORY)
 
             # get reply address
             reply_address = gmail_wrapper.getReplyTo(photo_emails[0])
@@ -175,7 +125,7 @@ def emailActions():
 
             gmail_wrapper.markAsRead(photo_emails)
 
-            ### TODO add this as an option too
+            # TODO add this as an option too
             # delete the image file
             os.system('rm ' + photo_filename)
             logging.info('deleted ' + photo_filename)
@@ -213,13 +163,4 @@ if __name__ == '__main__':
     logging.basicConfig(filename=LOG_FILE, level=logging.INFO,
                         format='%(asctime)s %(levelname)s %(message)s', datefmt='%d-%m-%Y %H:%M:%S')
     # email actions
-    emailActions()
-
-    # feed by receiving email
-    # feedByGmail()
-
-    # send photo to requesting email
-    # sendPhoto()
-
-    # kick off the feeding process (move the servo)
-#    feed()
+    email_actions()
