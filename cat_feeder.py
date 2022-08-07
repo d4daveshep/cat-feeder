@@ -10,10 +10,6 @@ import RPi.GPIO as GPIO
 
 from gmail_wrapper import GmailWrapper
 
-SUBJECT_FEED = 'FEED CATS'  # case insensitive
-SUBJECT_PHOTO = 'TAKE PHOTO'
-SUBJECT_GET_LOG = 'GET LOG'
-
 GPIO_PIN = 11
 
 WORKING_DIRECTORY = os.path.dirname(__file__) + '/'  # was '/home/pi/dev/cat-feeder/'
@@ -92,21 +88,23 @@ def email_actions():
     nothing_to_do = True
 
     # check for feed emails
-    feed_emails = gmail_wrapper.getIdsBySubject(SUBJECT_FEED)
+    feed_subject = "FEED CATS"
+    feed_emails = gmail_wrapper.getIdsBySubject(feed_subject)
     if len(feed_emails) > 0:
-        logging.info('got %d email to ' + SUBJECT_FEED, len(feed_emails))
+        logging.info('got %d email to ' + feed_subject, len(feed_emails))
         nothing_to_do = False
         try:
             feed()
             gmail_wrapper.markAsRead(feed_emails)
             logging.info('fed cats successfully')
         except Exception as e:
-            logging.error('FAILED to' + SUBJECT_FEED, '%s', e)
+            logging.error('FAILED to' + feed_subject, '%s', e)
 
     # check for take photo emails
-    photo_emails = gmail_wrapper.getIdsBySubject(SUBJECT_PHOTO)
+    photo_subject = "TAKE PHOTO"
+    photo_emails = gmail_wrapper.getIdsBySubject(photo_subject)
     if len(photo_emails) > 0:
-        logging.info("got %d email to " + SUBJECT_PHOTO, len(photo_emails))
+        logging.info("got %d email to " + photo_subject, len(photo_emails))
         nothing_to_do = False
 
         try:
@@ -129,11 +127,12 @@ def email_actions():
             logging.info('deleted ' + photo_filename)
 
         except Exception as e:
-            logging.error('FAILED to ' + SUBJECT_PHOTO + ': ' + str(e))
+            logging.error('FAILED to ' + photo_subject + ': ' + str(e))
 
-    get_log_emails = gmail_wrapper.getIdsBySubject(SUBJECT_GET_LOG)
+    get_log_subject = "GET LOG"
+    get_log_emails = gmail_wrapper.getIdsBySubject(get_log_subject)
     if len(get_log_emails) > 0:
-        logging.info("got %d email to " + SUBJECT_GET_LOG, len(get_log_emails))
+        logging.info("got %d email to " + get_log_subject, len(get_log_emails))
         nothing_to_do = False
 
         try:
@@ -147,7 +146,7 @@ def email_actions():
             gmail_wrapper.markAsRead(get_log_emails)
 
         except Exception as e:
-            logging.error('FAILED to ' + SUBJECT_GET_LOG + ': ' + str(e))
+            logging.error('FAILED to ' + get_log_subject + ': ' + str(e))
 
     if nothing_to_do is True:
         logging.info('nothing to do')
