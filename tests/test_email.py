@@ -31,12 +31,12 @@ def test_check_for_new_email(gmail_wrapper, email_app_pwd, email_address):
 
     assert gmail_wrapper is not None  # check imap object is valid
 
-    feed_emails = gmail_wrapper.getIdsBySubject(feed_subject)  # get mail IDs matching feed subject
-    gmail_wrapper.markAsRead(feed_emails)  # mark them as reed
+    feed_emails = gmail_wrapper.get_IDs_by_subject(feed_subject)  # get mail IDs matching feed subject
+    gmail_wrapper.mark_as_read(feed_emails)  # mark them as reed
 
     gmail_wrapper.send_plain_email(feed_subject, email_address, f"test message: {feed_emails}")
 
-    feed_emails = gmail_wrapper.getIdsBySubject(feed_subject)  # get the mail IDs again
+    feed_emails = gmail_wrapper.get_IDs_by_subject(feed_subject)  # get the mail IDs again
     assert len(feed_emails) == 1  # we should have one new one
 
-    gmail_wrapper.markAsRead(feed_emails)  # mark it as read
+    gmail_wrapper.mark_as_read(feed_emails)  # mark it as read

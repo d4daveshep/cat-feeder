@@ -89,20 +89,20 @@ def email_actions():
 
     # check for feed emails
     feed_subject = "FEED CATS"
-    feed_emails = gmail_wrapper.getIdsBySubject(feed_subject)
+    feed_emails = gmail_wrapper.get_IDs_by_subject(feed_subject)
     if len(feed_emails) > 0:
         logging.info('got %d email to ' + feed_subject, len(feed_emails))
         nothing_to_do = False
         try:
             feed()
-            gmail_wrapper.markAsRead(feed_emails)
+            gmail_wrapper.mark_as_read(feed_emails)
             logging.info('fed cats successfully')
         except Exception as e:
             logging.error('FAILED to' + feed_subject, '%s', e)
 
     # check for take photo emails
     photo_subject = "TAKE PHOTO"
-    photo_emails = gmail_wrapper.getIdsBySubject(photo_subject)
+    photo_emails = gmail_wrapper.get_IDs_by_subject(photo_subject)
     if len(photo_emails) > 0:
         logging.info("got %d email to " + photo_subject, len(photo_emails))
         nothing_to_do = False
@@ -112,14 +112,14 @@ def email_actions():
             photo_filename = take_photo(WORKING_DIRECTORY)
 
             # get reply address
-            reply_address = gmail_wrapper.getReplyTo(photo_emails[0])
+            reply_address = gmail_wrapper.get_reply_to(photo_emails[0])
             logging.info('reply address is ' + reply_address)
 
             # send as email attachment
-            gmail_wrapper.sendImagefile('cat feeder photo', reply_address, photo_filename)
+            gmail_wrapper.send_image_file('cat feeder photo', reply_address, photo_filename)
             logging.info('photo taken and sent')
 
-            gmail_wrapper.markAsRead(photo_emails)
+            gmail_wrapper.mark_as_read(photo_emails)
 
             # TODO add this as an option too
             # delete the image file
@@ -130,20 +130,20 @@ def email_actions():
             logging.error('FAILED to ' + photo_subject + ': ' + str(e))
 
     get_log_subject = "GET LOG"
-    get_log_emails = gmail_wrapper.getIdsBySubject(get_log_subject)
+    get_log_emails = gmail_wrapper.get_IDs_by_subject(get_log_subject)
     if len(get_log_emails) > 0:
         logging.info("got %d email to " + get_log_subject, len(get_log_emails))
         nothing_to_do = False
 
         try:
-            reply_address = gmail_wrapper.getReplyTo(get_log_emails[0])
+            reply_address = gmail_wrapper.get_reply_to(get_log_emails[0])
             logging.info('reply address is ' + reply_address)
 
             # send as email attachment
-            gmail_wrapper.sendTextfile('cat feeder log file', reply_address, LOG_FILE)
+            gmail_wrapper.send_text_file('cat feeder log file', reply_address, LOG_FILE)
             logging.info('log file sent')
 
-            gmail_wrapper.markAsRead(get_log_emails)
+            gmail_wrapper.mark_as_read(get_log_emails)
 
         except Exception as e:
             logging.error('FAILED to ' + get_log_subject + ': ' + str(e))

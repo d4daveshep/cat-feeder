@@ -36,9 +36,9 @@ class GmailWrapper:
 
     #   The IMAPClient search returns a list of Id's that match the given criteria.
     #   An Id in this case identifies a specific email
-    def getIdsBySubject(self, subject, unreadonly=True, folder='INBOX'):
+    def get_IDs_by_subject(self, subject, unreadonly=True, folder='INBOX'):
         #   search within the specified folder, e.g. Inbox
-        self.setFolder(folder)
+        self.set_folder(folder)
 
         #   build the search criteria (e.g. unread emails with the given subject)
         self.searchCriteria = [UNSEEN_FLAG, 'SUBJECT', subject]
@@ -50,15 +50,15 @@ class GmailWrapper:
         #   conduct the search and return the resulting Ids
         return self.server.search(self.searchCriteria)
 
-    def markAsRead(self, mail_ids, folder='INBOX'):
-        self.setFolder(folder)
+    def mark_as_read(self, mail_ids, folder='INBOX'):
+        self.set_folder(folder)
         self.server.set_flags(mail_ids, [SEEN])
 
-    def setFolder(self, folder):
+    def set_folder(self, folder):
         self.server.select_folder(folder)
 
-    def getReplyTo(self, message_id, folder='INBOX'):
-        self.setFolder(folder)
+    def get_reply_to(self, message_id, folder='INBOX'):
+        self.set_folder(folder)
         message_data = self.server.fetch([message_id], 'RFC822').get(message_id)
         email_message = email.message_from_bytes(message_data[b'RFC822'])
         email_return_path = email_message.get('Return-Path')
@@ -90,7 +90,7 @@ class GmailWrapper:
             server.sendmail(to_address, to_address, msg.as_string())
 
 
-    def sendImagefile(self, subject, to_address, filename):
+    def send_image_file(self, subject, to_address, filename):
         # create email object that has multiple part
         msg = MIMEMultipart()
         msg['From'] = self.userName
@@ -116,7 +116,7 @@ class GmailWrapper:
         smtp.sendmail(self.userName, to_address, msg.as_string())
         smtp.quit()
 
-    def sendTextfile(self, subject, to_address, filename):
+    def send_text_file(self, subject, to_address, filename):
         # create email object that has multiple part
         msg = MIMEMultipart()
         msg['From'] = self.userName
