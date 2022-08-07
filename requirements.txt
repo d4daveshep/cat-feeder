@@ -1,4 +1,4 @@
 IMAPClient==2.3.1
 RPi.GPIO==0.7.1
 six==1.16.0
-
+pytest~=7.1.2
