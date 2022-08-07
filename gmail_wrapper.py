@@ -89,7 +89,6 @@ class GmailWrapper:
             server.login(to_address, self.password)
             server.sendmail(to_address, to_address, msg.as_string())
 
-
     def send_image_file(self, subject, to_address, filename):
         # create email object that has multiple part
         msg = MIMEMultipart()
