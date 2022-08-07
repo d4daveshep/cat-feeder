@@ -10,8 +10,6 @@ import RPi.GPIO as GPIO
 
 from gmail_wrapper import GmailWrapper
 
-GPIO_PIN = 11
-
 WORKING_DIRECTORY = os.path.dirname(__file__) + '/'  # was '/home/pi/dev/cat-feeder/'
 LOG_FILE = WORKING_DIRECTORY + 'logs/feeder.log'
 
@@ -42,6 +40,8 @@ def dutycycle(angle):
 
 
 def feed():
+    GPIO_PIN = 11
+
     # let the GPIO library know where we've connected our servo to the Pi
     global servo
     GPIO.setmode(GPIO.BOARD)
