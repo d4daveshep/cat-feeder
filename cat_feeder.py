@@ -8,7 +8,7 @@ from datetime import datetime
 
 import RPi.GPIO as GPIO
 
-from GmailWrapper import GmailWrapper
+from gmail_wrapper import GmailWrapper
 
 HOSTNAME = 'imap.gmail.com'
 USERNAME = 'cat-feeder@daveshep.net.nz'
