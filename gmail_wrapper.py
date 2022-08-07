@@ -4,6 +4,7 @@ import email
 import logging
 import os.path
 import smtplib
+import ssl
 from email.header import Header
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
@@ -66,6 +67,37 @@ class GmailWrapper:
 
         # message = email.message_from_bytes(message_data)
         # return message_data
+
+    def send_plain_email(self, subject, to_address, body_text):
+        # create email object that has multiple part
+        msg = MIMEMultipart()
+        msg['From'] = to_address
+        msg['To'] = to_address
+        msg['Subject'] = Header(subject, 'utf-8').encode()
+
+        # add message content
+        msg_content = MIMEText(body_text, 'plain', 'utf-8')
+        msg.attach(msg_content)
+
+        # Create a secure SSL context
+        smtp_server = "smtp.gmail.com"
+        port = 587  # For SSL
+        context = ssl.create_default_context()
+
+        # Try to log in to server and send email
+        try:
+            server = smtplib.SMTP(smtp_server, port)
+            server.ehlo()  # Can be omitted
+            server.starttls(context=context)  # Secure the connection
+            server.ehlo()  # Can be omitted
+            server.login(to_address, self.password)
+            server.sendmail(to_address, to_address, msg.as_string())
+
+        except Exception as e:
+            # Print any error messages to stdout
+            print(e)
+        finally:
+            server.quit()
 
     def sendImagefile(self, subject, to_address, filename):
         # create email object that has multiple part

@@ -1,5 +1,8 @@
 import smtplib
 import ssl
+from email.header import Header
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 import pytest
 
@@ -40,6 +43,41 @@ def gmail_smtp_wrapper(email_app_pwd, email_address):
         server.login(email_address, email_app_pwd)
 
         yield server
+
+    except Exception as e:
+        # Print any error messages to stdout
+        print(e)
+    finally:
+        server.quit()
+
+
+def test_send_plain_email(email_address, email_app_pwd):
+
+    feed_subject = "FEED CATS"
+
+    # create email object that has multiple part
+    msg = MIMEMultipart()
+    msg['From'] = email_address
+    msg['To'] = email_address
+    msg['Subject'] = Header(feed_subject, 'utf-8').encode()
+
+    # add message content
+    msg_content = MIMEText(f"test message command: {feed_subject}", 'plain', 'utf-8')
+    msg.attach(msg_content)
+
+    # Create a secure SSL context
+    smtp_server = "smtp.gmail.com"
+    port = 587  # For SSL
+    context = ssl.create_default_context()
+
+    # Try to log in to server and send email
+    try:
+        server = smtplib.SMTP(smtp_server, port)
+        server.ehlo()  # Can be omitted
+        server.starttls(context=context)  # Secure the connection
+        server.ehlo()  # Can be omitted
+        server.login(email_address, email_app_pwd)
+        server.sendmail(email_address, email_address, msg.as_string())
 
     except Exception as e:
         # Print any error messages to stdout
