@@ -10,9 +10,6 @@ import RPi.GPIO as GPIO
 
 from gmail_wrapper import GmailWrapper
 
-HOSTNAME = 'imap.gmail.com'
-USERNAME = 'cat-feeder@daveshep.net.nz'
-PASSWORD = 'vhov zueo fyas bkxd'
 SUBJECT_FEED = 'FEED CATS'  # case insensitive
 SUBJECT_PHOTO = 'TAKE PHOTO'
 SUBJECT_GET_LOG = 'GET LOG'
@@ -88,8 +85,9 @@ def feed():
 
 
 def email_actions():
-    logging.info('checking email at ' + USERNAME)
-    gmail_wrapper = GmailWrapper(HOSTNAME, USERNAME, PASSWORD)
+    email_username = "cat-feeder@daveshep.net.nz"
+    logging.info('checking email at ' + email_username)
+    gmail_wrapper = GmailWrapper("imap.gmail.com", email_username, "vhov zueo fyas bkxd")
 
     nothing_to_do = True
 
