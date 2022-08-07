@@ -81,23 +81,14 @@ class GmailWrapper:
 
         # Create a secure SSL context
         smtp_server = "smtp.gmail.com"
-        port = 587  # For SSL
+        port = 465  # For SSL
         context = ssl.create_default_context()
 
         # Try to log in to server and send email
-        try:
-            server = smtplib.SMTP(smtp_server, port)
-            server.ehlo()  # Can be omitted
-            server.starttls(context=context)  # Secure the connection
-            server.ehlo()  # Can be omitted
+        with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
             server.login(to_address, self.password)
             server.sendmail(to_address, to_address, msg.as_string())
 
-        except Exception as e:
-            # Print any error messages to stdout
-            print(e)
-        finally:
-            server.quit()
 
     def sendImagefile(self, subject, to_address, filename):
         # create email object that has multiple part
