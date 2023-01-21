@@ -48,7 +48,7 @@ def feed():
     GPIO.setup(GPIO_PIN, GPIO.OUT)
 
     cycles = 3  # how many cycles do we want to run - this affects how much is dispensed
-    angle = 60.0  # rotation angle positive and negative
+    angle = 89.0  # rotation angle positive and negative
 
     try:
         servo = GPIO.PWM(GPIO_PIN, 50)

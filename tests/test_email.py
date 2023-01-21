@@ -11,7 +11,7 @@ from gmail_wrapper import GmailWrapper
 
 @pytest.fixture()
 def email_app_pwd():
-    return "qukd oiup sfjb vmyc"
+    return "qqdv jxwo cotb msbd"
 
 
 @pytest.fixture()
