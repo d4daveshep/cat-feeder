@@ -81,9 +81,9 @@ def feed():
 
 
 def email_actions():
-    email_username = "cat-feeder@daveshep.net.nz"
+    email_username = "dev.catfeeder123@gmail.com"
     logging.info('checking email at ' + email_username)
-    gmail_wrapper = GmailWrapper("imap.gmail.com", email_username, "vhov zueo fyas bkxd")
+    gmail_wrapper = GmailWrapper("imap.gmail.com", email_username, "qqdv jxwo cotb msbd")
 
     nothing_to_do = True
 
